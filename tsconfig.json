@@ -22,11 +22,12 @@
       "@layout/*": ["./src/components/layouts/*"],
       "@helper/*": ["./src/helpers/*"],
       "@hook/*": ["./src/hooks/*"],
-      "@provider/*": ["./src/providers/*"],
+      "@redux/*": ["./src/redux/*"],
       "@type/*": ["./src/types/*"],
       "@database/*": ["./src/database/*"],
       "@config/*": ["./src/config/*"],
-      "@icon/*": ["./src/components/icons/*"]
+      "@icon/*": ["./src/components/icons/*"],
+      "@slice/*": ["./src/redux/slices/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
