@@ -2,12 +2,20 @@ import '@style/globals.css';
 
 import type { AppProps } from 'next/app';
 
+import Notifications from '@layout/Notifications';
 import Layout from '@layout/Layout';
 
-export default function App({ Component, pageProps }: AppProps) {
+import { wrapper } from '@redux/index';
+
+const App = ({ Component, pageProps }: AppProps) => {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <>
+      <Notifications />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </>
   );
-}
+};
+
+export default wrapper.withRedux(App);
