@@ -1,34 +1,33 @@
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 import type { AxiosResponse } from 'axios';
 
-import Tag from '@element/Tag';
+import Table from '@module/Table';
 
 import database from '@database/index';
 
 import { Script } from '@type/models';
-import Table from '@module/Table';
-import { renderDate } from '@helper/render.helper';
 
 const Scripts = () => {
+  const router = useRouter();
+
   const [loading, setLoading] = useState(true);
   const [scripts, setScripts] = useState<Script[]>([]);
 
   useEffect(() => {
     if (loading) {
       database.get<any, AxiosResponse<Script[]>>('/scripts').then((res) => {
-        setScripts(
-          res.data.map(({ createdAt, updatedAt, ...fields }) => ({
-            ...fields,
-            createdAt: new Date(createdAt),
-            updatedAt: new Date(updatedAt),
-          }))
-        );
+        setScripts(res.data);
       });
 
       setLoading(false);
     }
-  }, [loading]);
+  }, []);
+
+  const handleRowClick = (script: Script) => {
+    router.push('/scripts/' + script.id);
+  };
 
   return (
     <div className='flex flex-col px-12 py-16'>
@@ -43,9 +42,10 @@ const Scripts = () => {
         columns={[
           { label: 'ID', dataKey: 'id' },
           { label: 'Contenu', dataKey: 'content' },
-          { label: 'Date de création', dataKey: 'createdAt', render: (d) => d?.toLocaleString() },
+          { label: 'Date de création', dataKey: 'createdAt' },
         ]}
         data={scripts}
+        onClick={handleRowClick}
       />
     </div>
   );
