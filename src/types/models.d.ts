@@ -1,26 +1,31 @@
 interface Model {
   id: number;
 
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date | null;
+  createdAt: string;
+  updatedAt: string;
+  deletedAt: string | null;
 }
 
 export interface Script extends Model {
   content: string;
 
   modes: Mode[];
+  playerIntervals?: PlayerInterval[];
 }
 
 export interface PlayerInterval extends Model {
   min: number;
   max: number;
 
+  locations?: Location[];
+
   scriptId: number;
 }
 
 export interface Location extends Model {
   name: string;
+
+  roleCombinations?: RoleCombination[];
 
   playerIntervalId: number;
 }
