@@ -1,54 +1,54 @@
 interface Model {
-  id: number;
+	id: number;
 
-  createdAt: string;
-  updatedAt: string;
-  deletedAt: string | null;
+	createdAt: string;
+	updatedAt: string;
+	deletedAt: string | null;
 }
 
 export interface Script extends Model {
-  content: string;
+	content: string;
 
-  modes: Mode[];
-  playerIntervals?: PlayerInterval[];
+	modes: Mode[];
+	playerIntervals?: PlayerInterval[];
 }
 
 export interface PlayerInterval extends Model {
-  min: number;
-  max: number;
+	min: number;
+	max: number;
 
-  locations?: Location[];
+	locations?: Location[];
 
-  scriptId: number;
+	scriptId: number;
 }
 
 export interface Location extends Model {
-  name: string;
+	name: string;
 
-  roleCombinations?: RoleCombination[];
+	roleCombinations?: RoleCombination[];
 
-  playerIntervalId: number;
+	playerIntervalId: number;
 }
 
 export interface RoleCombination extends Model {
-  roles: Role[];
+	roles: Role[];
 }
 
 export interface Role extends Model {
-  name: string;
-  unique: boolean;
-  required: boolean;
-  gender: 1 | 2;
+	name: string;
+	unique: boolean;
+	required: boolean;
+	gender: 1 | 2;
 
-  roleCombinationId: number;
+	roleCombinationId: number;
 }
 
 export interface Mode extends Model {
-  name: string;
-  description: string;
-  summary: string;
+	name: string;
+	description: string;
+	summary: string;
 }
 
 export interface Quest extends Model {
-  content: string;
+	content: string;
 }

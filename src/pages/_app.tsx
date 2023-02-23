@@ -8,14 +8,14 @@ import Layout from '@layout/Layout';
 import { wrapper } from '@redux/index';
 
 const App = ({ Component, pageProps }: AppProps) => {
-  return (
-    <>
-      <Notifications />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </>
-  );
+	return (
+		<>
+			<Notifications />
+			<Layout>
+				<Component {...pageProps} />
+			</Layout>
+		</>
+	);
 };
 
 export default wrapper.withRedux(App);

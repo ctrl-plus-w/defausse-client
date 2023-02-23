@@ -3,6 +3,6 @@
  * @param obj The object to check
  * @returns A boolean
  */
-export const isEmptyObj = (obj: Object): boolean => {
-  return Object.keys(obj).length === 0;
+export const isEmptyObj = (obj: object): boolean => {
+	return Object.keys(obj).length === 0;
 };

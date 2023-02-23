@@ -6,5 +6,5 @@ import { ReactNode } from 'react';
  * @returns A string
  */
 export const renderDate = (date: string | number): ReactNode | string => {
-  return typeof date === 'string' ? new Date(date).toLocaleString() : date;
+	return typeof date === 'string' ? new Date(date).toLocaleString() : date;
 };

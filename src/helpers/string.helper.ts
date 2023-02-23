@@ -5,11 +5,11 @@
  * @returns A string
  */
 export const truncate = (str: string, maxLength: number) => {
-  if (str.length > maxLength) {
-    return str.slice(0, maxLength - 3) + '...';
-  }
+	if (str.length > maxLength) {
+		return str.slice(0, maxLength - 3) + '...';
+	}
 
-  return str;
+	return str;
 };
 
 /**
@@ -18,7 +18,7 @@ export const truncate = (str: string, maxLength: number) => {
  * @returns A boolean
  */
 export const isNum = (str: string): boolean => {
-  return new RegExp('^[0-9]+$').test(str);
+	return new RegExp('^[0-9]+$').test(str);
 };
 
 /**
@@ -27,5 +27,5 @@ export const isNum = (str: string): boolean => {
  * @returns A boolean
  */
 export const isEmptyStr = (str: string): boolean => {
-  return str === '';
+	return str === '';
 };
