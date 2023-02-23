@@ -4,6 +4,7 @@ import { useState } from 'react';
 import type { ChangeEvent } from 'react';
 import type { AxiosResponse } from 'axios';
 
+import Link from 'next/link';
 import clsx from 'clsx';
 
 import InvisibleInput from '@element/InvisibleInput';
@@ -15,7 +16,6 @@ import { addNotification } from '@slice/notificationsSlice';
 
 import { NotificationStatus } from '@type/notifications';
 import { Location } from '@type/models';
-import Link from 'next/link';
 
 interface IProps {
   location: Location;
