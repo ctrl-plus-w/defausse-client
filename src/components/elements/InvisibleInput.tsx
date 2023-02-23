@@ -1,4 +1,4 @@
-import { createRef, useCallback, useEffect } from 'react';
+import { KeyboardEvent, createRef, useCallback, useEffect } from 'react';
 
 import type { ChangeEventHandler, ChangeEvent, FocusEventHandler } from 'react';
 
@@ -18,9 +18,21 @@ interface IProps {
 
   bottomBorder?: boolean;
   autoWidth?: boolean;
+  blurOnEnter?: boolean;
 }
 
-const InvisibleInput = ({ onChange, onFocus, onBlur, className, placeholder, value, autoWidth, bottomBorder, textAlign }: IProps) => {
+const InvisibleInput = ({
+  onChange,
+  onFocus,
+  onBlur,
+  className,
+  placeholder,
+  value,
+  autoWidth,
+  textAlign,
+  bottomBorder,
+  blurOnEnter = true,
+}: IProps) => {
   const isTextAlignedLeft = textAlign === 'left';
   const isTextAlignedRight = textAlign === 'right';
   const isTextAlignedCenter = textAlign === 'center';
@@ -53,6 +65,10 @@ const InvisibleInput = ({ onChange, onFocus, onBlur, className, placeholder, val
     if (onChange) onChange(event);
   };
 
+  const _onKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (blurOnEnter && inputRef.current && event.key === 'Enter') inputRef.current.blur();
+  };
+
   return (
     <input
       type='text'
@@ -61,6 +77,7 @@ const InvisibleInput = ({ onChange, onFocus, onBlur, className, placeholder, val
       onChange={_onChange}
       onFocus={onFocus}
       onBlur={onBlur}
+      onKeyDown={_onKeyDown}
       ref={inputRef}
       className={clsx([
         'w-8 appearance-none cursor-pointer',
