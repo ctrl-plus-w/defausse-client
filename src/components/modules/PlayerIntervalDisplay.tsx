@@ -189,8 +189,8 @@ const PlayerIntervalDisplay = ({ playerInterval }: IProps) => {
       </h2>
 
       <ul className='flex flex-col mt-4 divide-y'>
-        {playerInterval.locations?.map((location, index) => (
-          <LocationDisplay location={location} key={index} />
+        {playerInterval.locations?.map((location) => (
+          <LocationDisplay location={location} key={location.id} />
         ))}
 
         <li className='pl-6 py-2'>
