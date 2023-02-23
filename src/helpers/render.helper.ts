@@ -5,6 +5,6 @@ import { ReactNode } from 'react';
  * @param date The date to render
  * @returns A string
  */
-export const renderDate = (date: Date): ReactNode | string => {
-  return date.toLocaleString();
+export const renderDate = (date: string | number): ReactNode | string => {
+  return typeof date === 'string' ? new Date(date).toLocaleString() : date;
 };
