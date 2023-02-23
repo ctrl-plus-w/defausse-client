@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { ChangeEventHandler } from 'react';
+import { ChangeEventHandler, FocusEventHandler } from 'react';
 
 interface IProps {
   name: string;
@@ -7,13 +7,15 @@ interface IProps {
 
   value?: string;
   onChange?: ChangeEventHandler<HTMLTextAreaElement>;
+  onFocus?: FocusEventHandler<HTMLTextAreaElement>;
+  onBlur?: FocusEventHandler<HTMLTextAreaElement>;
 
   rows?: number;
 
   className?: string;
 }
 
-const TextArea = ({ name, label, rows, value, onChange, className }: IProps) => {
+const TextArea = ({ name, label, rows, value, onChange, onFocus, onBlur, className }: IProps) => {
   return (
     <label htmlFor={name} className={clsx(['flex flex-col gap-4', className])}>
       <span className='font-semibold text-slate-900'>{label}</span>
@@ -29,6 +31,8 @@ const TextArea = ({ name, label, rows, value, onChange, className }: IProps) => 
         rows={rows}
         value={value}
         onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
       ></textarea>
     </label>
   );
