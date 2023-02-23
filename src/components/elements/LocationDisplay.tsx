@@ -1,13 +1,15 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 
-import type { ChangeEvent } from 'react';
+import type { MouseEvent, ChangeEvent } from 'react';
 import type { AxiosResponse } from 'axios';
 
 import Link from 'next/link';
 import clsx from 'clsx';
 
 import InvisibleInput from '@element/InvisibleInput';
+
+import XIcon from '@icon/XIcon';
 
 import database from '@database/index';
 
@@ -33,11 +35,11 @@ const LocationDisplay = ({ location, className }: IProps) => {
 
   const handleClick = () => {};
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
 
-  const handleBlur = async () => {
+  const onBlur = async () => {
     if (name === location.name) return;
 
     if (name === '') {
@@ -64,8 +66,28 @@ const LocationDisplay = ({ location, className }: IProps) => {
     }
   };
 
+  const onDelete = async (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    try {
+      await database.delete<any, AxiosResponse<Location>>(`/locations/${location.id}`);
+
+      const { data: _script } = await database.get(`/scripts/${script!.id}`);
+
+      dispatch(updateScript(_script));
+    } catch (err) {
+      dispatch(
+        addNotification({
+          name: 'Une erreure est survenue',
+          description: "La location n'as pas été supprimée.",
+          status: NotificationStatus.ERROR,
+        })
+      );
+    }
+  };
+
   return (
-    <li className={clsx(['cursor-pointer hover:bg-gray-50', className])} onClick={handleClick}>
+    <li className={clsx(['flex justify-between cursor-pointer hover:bg-gray-50 transition-colors duration-300', className])} onClick={handleClick}>
       <Link className='block pl-4 py-2' href={`/scripts/${script!.id}/locations/${location.id}`}>
         <InvisibleInput
           className={clsx([
@@ -74,12 +96,16 @@ const LocationDisplay = ({ location, className }: IProps) => {
           ])}
           value={name}
           onClick={(e) => e.preventDefault()}
-          onChange={handleChange}
-          onBlur={handleBlur}
+          onChange={onChange}
+          onBlur={onBlur}
           placeholder={location.name}
           autoWidth
         />
       </Link>
+
+      <button className='px-4 py-2 text-gray-500 hover:text-pink-700 transition-colors duration-300' onClick={onDelete}>
+        <XIcon />
+      </button>
     </li>
   );
 };
