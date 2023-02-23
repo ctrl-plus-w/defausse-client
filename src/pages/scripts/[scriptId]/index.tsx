@@ -10,11 +10,10 @@ import PlayerIntervalDisplay from '@module/PlayerIntervalDisplay';
 
 import Breadcrumb from '@element/Breadcrumb';
 import TextArea from '@element/TextArea';
-import Button from '@element/Button';
 
 import database from '@database/index';
 
-import { selectScript, selectScriptIsLoading, setScript } from '@slice/scriptSlice';
+import { selectScript, selectScriptIsLoading, setScript, updateScript } from '@slice/scriptSlice';
 import { addNotification } from '@slice/notificationsSlice';
 
 import { NotificationStatus } from '@type/notifications';
@@ -63,6 +62,28 @@ const Script = () => {
     }
   }, []);
 
+  const onTextAreaBlur = async () => {
+    if (!script || content === script.content) return;
+
+    try {
+      await database.put<any, AxiosResponse<Script>>(`/scripts/${script.id}`, {
+        content,
+      });
+
+      const { data: _script } = await database.get(`/scripts/${script.id}`);
+
+      dispatch(updateScript(_script));
+    } catch (err) {
+      dispatch(
+        addNotification({
+          name: 'Une erreure est survenue',
+          description: "La modification n'as pas été appliquée.",
+          status: NotificationStatus.ERROR,
+        })
+      );
+    }
+  };
+
   const sortPlayerIntervals = ({ min: pi1Min, max: pi1Max }: PlayerInterval, { min: pi2Min, max: pi2Max }: PlayerInterval) => {
     if (pi1Min === pi2Min) {
       return pi1Max > pi2Max ? 1 : -1;
@@ -90,13 +111,12 @@ const Script = () => {
           <TextArea
             name='script-content'
             label='Contenu du script'
+            onBlur={onTextAreaBlur}
             className='w-full'
             value={content}
             onChange={(e) => setContent(e.target.value)}
             rows={5}
           />
-
-          <Button>Modifier le contenu</Button>
         </div>
 
         <div className='flex flex-col gap-12 flex-1'>
