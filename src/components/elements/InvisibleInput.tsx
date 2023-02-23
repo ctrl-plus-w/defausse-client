@@ -1,6 +1,6 @@
-import { KeyboardEvent, createRef, useCallback, useEffect } from 'react';
+import { createRef, useCallback, useEffect } from 'react';
 
-import type { ChangeEventHandler, ChangeEvent, FocusEventHandler } from 'react';
+import type { KeyboardEvent, MouseEventHandler, ChangeEventHandler, ChangeEvent, FocusEventHandler } from 'react';
 
 import clsx from 'clsx';
 
@@ -9,6 +9,7 @@ interface IProps {
   onChange?: ChangeEventHandler<HTMLInputElement>;
   onFocus?: FocusEventHandler<HTMLInputElement>;
   onBlur?: FocusEventHandler<HTMLInputElement>;
+  onClick?: MouseEventHandler<HTMLInputElement>;
 
   textAlign?: 'center' | 'left' | 'right';
 
@@ -25,6 +26,7 @@ const InvisibleInput = ({
   onChange,
   onFocus,
   onBlur,
+  onClick,
   className,
   placeholder,
   value,
@@ -77,6 +79,7 @@ const InvisibleInput = ({
       onChange={_onChange}
       onFocus={onFocus}
       onBlur={onBlur}
+      onClick={onClick}
       onKeyDown={_onKeyDown}
       ref={inputRef}
       className={clsx([
