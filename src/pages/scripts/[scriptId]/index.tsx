@@ -89,27 +89,27 @@ const Script = () => {
   }
 
   return (
-    <div className='flex flex-col h-full px-12 py-16'>
+    <div className='flex flex-col px-12 py-16'>
       <Breadcrumb items={[{ label: 'Scénarios' }, { label: `Scénario(ID: ${script!.id.toString()})` }]} />
       <h1 className='text-5xl font-medium text-gray-900 mb-4 mt-2'>Édition</h1>
 
-      <p className='text-normal font-normal text-slate-700 w-1/2 mb-16'>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere accusamus, nisi doloribus odit facilis sequi assumenda at aliquam alias, et
-        eaque, vitae blanditiis. Rerum, consectetur aliquid itaque est ad eos.
+      <p className='text-normal font-normal text-slate-700 w-2/3 mb-16'>
+        Sur cette page, vous pouvez modifier les informations relatives à un scénario. Vous avez sur la gauche de la page un champs dans lequel vous
+        pouvez rentrer le contenu du scénario en lui-même (il s&apos;enregistre tout seul lorsque vous quitter le champs). D&apos;une autre part, sur
+        la droite de l&apos;interface, vous pouvez modifier les locations où se passent les scénarios en fonction du nombre de joueurs. (Ici aussi,
+        cela s&apos;enregistre tout seul)
       </p>
 
-      <div className='flex gap-8 w-full h-full'>
-        <div className='flex flex-col flex-1 gap-4 justify-between items-end'>
-          <TextArea
-            name='script-content'
-            label='Contenu du script'
-            onBlur={onTextAreaBlur}
-            className='w-full'
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            rows={5}
-          />
-        </div>
+      <div className='flex flex-col gap-8 w-full h-full '>
+        <TextArea
+          name='script-content'
+          label='Contenu du script'
+          onBlur={onTextAreaBlur}
+          className='w-full'
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          rows={5}
+        />
 
         <PlayerIntervalsDisplay />
       </div>
