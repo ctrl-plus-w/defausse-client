@@ -9,6 +9,8 @@ interface IProps {
   label: string;
 
   value?: string;
+  placeholder?: string;
+
   onChange?: ChangeEventHandler<HTMLTextAreaElement>;
   onFocus?: FocusEventHandler<HTMLTextAreaElement>;
   onBlur?: FocusEventHandler<HTMLTextAreaElement>;
@@ -20,7 +22,7 @@ interface IProps {
   className?: string;
 }
 
-const TextArea = ({ name, label, rows, value, onChange, onFocus, onBlur, className, blurOnEnter = true }: IProps) => {
+const TextArea = ({ name, label, rows, value, placeholder, onChange, onFocus, onBlur, className, blurOnEnter = true }: IProps) => {
   const textAreaRef = createRef<HTMLTextAreaElement>();
 
   const _onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -37,11 +39,11 @@ const TextArea = ({ name, label, rows, value, onChange, onFocus, onBlur, classNa
           'focus:outline-none focus:border-pink-700 focus:ring focus:ring-pink-200',
           'hover:border-pink-700',
           'transition-colors duration-300',
-          className,
         ])}
         ref={textAreaRef}
         rows={rows}
         value={value}
+        placeholder={placeholder}
         onChange={onChange}
         onKeyDown={_onKeyDown}
         onFocus={onFocus}
