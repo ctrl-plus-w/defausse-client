@@ -135,6 +135,7 @@ const PlayerIntervalDisplay = ({ playerInterval }: IProps) => {
     }
 
     if (max === '' || _max === _min) setHasInterval(false);
+    else setHasInterval(true);
   };
 
   const blurMinValue = () => {
