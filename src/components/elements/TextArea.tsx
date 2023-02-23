@@ -1,5 +1,8 @@
+import { createRef } from 'react';
+
+import type { ChangeEventHandler, FocusEventHandler, KeyboardEvent } from 'react';
+
 import clsx from 'clsx';
-import { ChangeEventHandler, FocusEventHandler } from 'react';
 
 interface IProps {
   name: string;
@@ -10,12 +13,20 @@ interface IProps {
   onFocus?: FocusEventHandler<HTMLTextAreaElement>;
   onBlur?: FocusEventHandler<HTMLTextAreaElement>;
 
+  blurOnEnter?: boolean;
+
   rows?: number;
 
   className?: string;
 }
 
-const TextArea = ({ name, label, rows, value, onChange, onFocus, onBlur, className }: IProps) => {
+const TextArea = ({ name, label, rows, value, onChange, onFocus, onBlur, className, blurOnEnter = true }: IProps) => {
+  const textAreaRef = createRef<HTMLTextAreaElement>();
+
+  const _onKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (blurOnEnter && textAreaRef.current && event.key === 'Enter') textAreaRef.current.blur();
+  };
+
   return (
     <label htmlFor={name} className={clsx(['flex flex-col gap-4', className])}>
       <span className='font-semibold text-slate-900'>{label}</span>
@@ -28,9 +39,11 @@ const TextArea = ({ name, label, rows, value, onChange, onFocus, onBlur, classNa
           'transition-colors duration-300',
           className,
         ])}
+        ref={textAreaRef}
         rows={rows}
         value={value}
         onChange={onChange}
+        onKeyDown={_onKeyDown}
         onFocus={onFocus}
         onBlur={onBlur}
       ></textarea>
