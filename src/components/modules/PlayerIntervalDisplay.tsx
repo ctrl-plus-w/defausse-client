@@ -41,11 +41,17 @@ const PlayerIntervalDisplay = ({ playerInterval }: IProps) => {
   const [_min, _setMin] = useState(min);
   const [_max, _setMax] = useState(max);
 
-  const updateValue = (func: Dispatch<SetStateAction<string>>) => (event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    if ((value !== '' && !isNum(value)) || parseInt(value) > config.MAX_INTERVAL_VALUE) return;
+  const updateValue =
+    (func: Dispatch<SetStateAction<string>>, cb?: (event: ChangeEvent<HTMLInputElement>) => void) => (event: ChangeEvent<HTMLInputElement>) => {
+      const { value } = event.target;
+      if ((value !== '' && !isNum(value)) || parseInt(value) > config.MAX_INTERVAL_VALUE) return;
 
-    func(value);
+      func(value);
+      cb && cb(event);
+    };
+
+  const updateMinValueCb = (event: ChangeEvent<HTMLInputElement>) => {
+    if (_min === _max) setMax(event.target.value);
   };
 
   const focusMaxValue = (_event: FocusEvent<HTMLInputElement>) => {
@@ -87,7 +93,7 @@ const PlayerIntervalDisplay = ({ playerInterval }: IProps) => {
 
     // If `max` have changed but not `min`
     if (parseInt(min) === playerInterval.min && parseInt(max) !== playerInterval.max) {
-      if (max === '' || playerInterval.min === playerInterval.max) {
+      if (max === '') {
         // If max isn't defined
         requestBody.max = parseInt(min);
       } else {
@@ -127,7 +133,7 @@ const PlayerIntervalDisplay = ({ playerInterval }: IProps) => {
       _setMax(max);
     }
 
-    if (max === '' || max === min) setHasInterval(false);
+    if (max === '' || _max === _min) setHasInterval(false);
   };
 
   const blurMinValue = () => {
@@ -139,10 +145,14 @@ const PlayerIntervalDisplay = ({ playerInterval }: IProps) => {
     if (isNaN(pMin) || pMin > pMax || pMin < 0 || (pMin === pMax && pMax === 0)) {
       setMin(_min);
     } else {
+      if (_min === _max) {
+        _setMax(min);
+      }
+
       _setMin(min);
     }
 
-    if (max === '' || max === min) setHasInterval(false);
+    if (max === '' || _max === _min) setHasInterval(false);
   };
 
   return (
@@ -154,7 +164,7 @@ const PlayerIntervalDisplay = ({ playerInterval }: IProps) => {
           placeholder='0'
           textAlign='center'
           value={min}
-          onChange={updateValue(setMin)}
+          onChange={updateValue(setMin, updateMinValueCb)}
           onBlur={blurMinValue}
           bottomBorder
           autoWidth
