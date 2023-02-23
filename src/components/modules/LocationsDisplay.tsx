@@ -61,12 +61,12 @@ const LocationsDisplay = ({ locations, playerIntervalId, className }: IProps) =>
   };
 
   return (
-    <ul className={clsx(['flex flex-col mt-4 divide-y', className])}>
+    <ul className={clsx(['flex flex-col mt-1 divide-y', className])}>
       {locations.map((location) => (
         <LocationDisplay location={location} key={location.id} />
       ))}
 
-      <li className='pl-4 py-2'>
+      <li className='pl-3 py-2'>
         <InvisibleInput
           value={newLocation}
           onChange={onChangeNewLocation}

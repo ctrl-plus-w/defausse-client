@@ -75,30 +75,31 @@ const PlayerIntervalsDisplay = ({ className }: IProps) => {
     <div className={clsx(['flex flex-col flex-1 gap-4 flex-1min-w-min', className])}>
       <span className='font-semibold text-slate-900'>Intervals de joueurs</span>
 
-      <div className='flex flex-col gap-12'>
+      <div className='flex flex-col gap-6'>
         {[...(script?.playerIntervals || [])].sort(sortPlayerIntervals).map((playerInterval) => (
           <PlayerIntervalDisplay playerInterval={playerInterval} key={playerInterval.id} />
         ))}
-      </div>
 
-      <h2 className='text-lg'>
-        Partie de{' '}
-        <InvisibleInput
-          className='px-1 text-pink-700 font-semibold'
-          placeholder='0'
-          textAlign='center'
-          value={min}
-          onChange={onChange}
-          onBlur={onBlur}
-          bottomBorder
-          autoWidth
-        />{' '}
-        joueurs
-        <span className='transition-all duration-300 opacity-30 cursor-not-allowed'>
-          {' '}
-          à <InvisibleInput className='px-1 text-pink-700 font-semibold' placeholder='-' textAlign='center' value='' bottomBorder disabled /> joueurs
-        </span>
-      </h2>
+        <h2 className='text-lg'>
+          Partie de{' '}
+          <InvisibleInput
+            className='px-1 text-pink-700 font-semibold'
+            placeholder='0'
+            textAlign='center'
+            value={min}
+            onChange={onChange}
+            onBlur={onBlur}
+            bottomBorder
+            autoWidth
+          />{' '}
+          joueurs
+          <span className='transition-all duration-300 opacity-30 cursor-not-allowed'>
+            {' '}
+            à <InvisibleInput className='px-1 text-pink-700 font-semibold' placeholder='-' textAlign='center' value='' bottomBorder disabled />{' '}
+            joueurs
+          </span>
+        </h2>
+      </div>
     </div>
   );
 };

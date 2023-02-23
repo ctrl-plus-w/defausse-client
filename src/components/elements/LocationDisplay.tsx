@@ -88,7 +88,7 @@ const LocationDisplay = ({ location, className }: IProps) => {
 
   return (
     <li className={clsx(['flex justify-between cursor-pointer hover:bg-gray-50 transition-colors duration-300', className])} onClick={handleClick}>
-      <Link className='block pl-4 py-2' href={`/scripts/${script!.id}/locations/${location.id}`}>
+      <Link className='block pl-3 py-2' href={`/scripts/${script!.id}/locations/${location.id}`}>
         <InvisibleInput
           className={clsx([
             'px-2 border border-transparent bg-transparent rounded-sm',
@@ -103,7 +103,7 @@ const LocationDisplay = ({ location, className }: IProps) => {
         />
       </Link>
 
-      <button className='px-4 py-2 text-gray-500 hover:text-pink-700 transition-colors duration-300' onClick={onDelete}>
+      <button className='px-3 py-2 text-gray-500 hover:text-pink-700 transition-colors duration-300' onClick={onDelete}>
         <XIcon />
       </button>
     </li>
