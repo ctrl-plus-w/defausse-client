@@ -100,8 +100,8 @@ const Script = () => {
         </div>
 
         <div className='flex flex-col gap-12 flex-1'>
-          {[...(script?.playerIntervals || [])].map((playerInterval, index) => (
-            <PlayerIntervalDisplay playerInterval={playerInterval} key={index} />
+          {[...(script?.playerIntervals || [])].sort(sortPlayerIntervals).map((playerInterval, index) => (
+            <PlayerIntervalDisplay playerInterval={playerInterval} key={playerInterval.id} />
           ))}
         </div>
       </div>
