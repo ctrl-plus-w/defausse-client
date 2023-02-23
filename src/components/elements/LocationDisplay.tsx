@@ -66,13 +66,14 @@ const LocationDisplay = ({ location, className }: IProps) => {
 
   return (
     <li className={clsx(['cursor-pointer hover:bg-gray-50', className])} onClick={handleClick}>
-      <Link className='block pl-4 py-2' href={`/scripts/${script!.id}/playerIntervals/${location.playerIntervalId}/locations/${location.id}`}>
+      <Link className='block pl-4 py-2' href={`/scripts/${script!.id}/locations/${location.id}`}>
         <InvisibleInput
           className={clsx([
             'px-2 border border-transparent bg-transparent rounded-sm',
             'hover:border-pink-700 hover:bg-white focus:bg-white focus:border-pink-700 focus:ring-2 focus:ring-pink-200',
           ])}
           value={name}
+          onClick={(e) => e.preventDefault()}
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder={location.name}
