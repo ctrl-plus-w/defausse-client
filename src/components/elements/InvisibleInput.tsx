@@ -20,6 +20,7 @@ interface IProps {
   bottomBorder?: boolean;
   autoWidth?: boolean;
   blurOnEnter?: boolean;
+  disabled?: boolean;
 }
 
 const InvisibleInput = ({
@@ -27,12 +28,17 @@ const InvisibleInput = ({
   onFocus,
   onBlur,
   onClick,
+
   className,
-  placeholder,
+
   value,
-  autoWidth,
+  placeholder,
+
   textAlign,
+
+  autoWidth,
   bottomBorder,
+  disabled,
   blurOnEnter = true,
 }: IProps) => {
   const isTextAlignedLeft = textAlign === 'left';
@@ -82,14 +88,16 @@ const InvisibleInput = ({
       onClick={onClick}
       onKeyDown={_onKeyDown}
       ref={inputRef}
+      disabled={disabled}
       className={clsx([
-        'w-8 appearance-none cursor-pointer',
+        'w-8 appearance-none',
         'focus:outline-none',
         'transition-colors duration-300',
         'placeholder:font-normal',
         isTextAlignedCenter && 'text-center',
         isTextAlignedLeft && 'text-left',
         isTextAlignedRight && 'text-right',
+        disabled && 'cursor-not-allowed',
         bottomBorder && 'border-b border-black focus:border-pink-700',
         className,
       ])}
