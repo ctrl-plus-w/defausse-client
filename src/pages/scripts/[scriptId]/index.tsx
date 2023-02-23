@@ -6,7 +6,7 @@ import { AxiosError } from 'axios';
 import type { GetServerSidePropsContext } from 'next';
 import type { AxiosResponse } from 'axios';
 
-import PlayerIntervalDisplay from '@module/PlayerIntervalDisplay';
+import PlayerIntervalsDisplay from '@module/PlayerIntervalsDisplay';
 
 import Breadcrumb from '@element/Breadcrumb';
 import TextArea from '@element/TextArea';
@@ -17,7 +17,7 @@ import { selectScript, selectScriptIsLoading, setScript, updateScript } from '@s
 import { addNotification } from '@slice/notificationsSlice';
 
 import { NotificationStatus } from '@type/notifications';
-import { PlayerInterval, Script } from '@type/models';
+import { Script } from '@type/models';
 
 const Script = () => {
   const router = useRouter();
@@ -84,14 +84,6 @@ const Script = () => {
     }
   };
 
-  const sortPlayerIntervals = ({ min: pi1Min, max: pi1Max }: PlayerInterval, { min: pi2Min, max: pi2Max }: PlayerInterval) => {
-    if (pi1Min === pi2Min) {
-      return pi1Max > pi2Max ? 1 : -1;
-    }
-
-    return pi1Min > pi2Min ? 1 : -1;
-  };
-
   if (loading) {
     return <>Loading...</>;
   }
@@ -119,15 +111,7 @@ const Script = () => {
           />
         </div>
 
-        <div className='flex flex-col flex-1 gap-4 flex-1min-w-min '>
-          <span className='font-semibold text-slate-900'>Intervals de joueurs</span>
-
-          <div className='flex flex-col gap-12'>
-            {[...(script?.playerIntervals || [])].sort(sortPlayerIntervals).map((playerInterval, index) => (
-              <PlayerIntervalDisplay playerInterval={playerInterval} key={playerInterval.id} />
-            ))}
-          </div>
-        </div>
+        <PlayerIntervalsDisplay />
       </div>
     </div>
   );
