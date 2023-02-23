@@ -18,6 +18,7 @@
     "paths": {
       "@style/*": ["./src/styles/*"],
       "@element/*": ["./src/components/elements/*"],
+      "@modal/*": ["./src/components/modals/*"],
       "@module/*": ["./src/components/modules/*"],
       "@layout/*": ["./src/components/layouts/*"],
       "@helper/*": ["./src/helpers/*"],
