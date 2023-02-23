@@ -2,17 +2,22 @@ import type { ReactNode } from 'react';
 
 import clsx from 'clsx';
 
-interface IProps<T> {
+type ColumnDefinition<T, K extends keyof T> = {
+  label: string;
+  dataKey: K;
+  render?: (object: T[K]) => ReactNode;
+};
+
+interface IProps<T, K extends keyof T> {
   className?: string;
 
-  columns: { label: string; dataKey: keyof T; render?: (object: T[keyof T]) => ReactNode }[];
-
+  columns: ColumnDefinition<T, K>[];
   data: T[];
 
   onClick?: (row: T) => void;
 }
 
-const Table = <T,>({ columns, data, onClick, className }: IProps<T>) => {
+const Table = <T, K extends keyof T>({ columns, data, onClick, className }: IProps<T, K>) => {
   return (
     <table className={clsx(['table-auto overflow-hidden rounded-sm border border-slate-200 border-separate border-spacing-0', className])}>
       <thead>
