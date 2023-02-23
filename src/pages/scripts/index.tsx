@@ -7,6 +7,8 @@ import Table from '@module/Table';
 
 import database from '@database/index';
 
+import { truncate } from '@helper/string.helper';
+
 import { Script } from '@type/models';
 
 const Scripts = () => {
@@ -41,7 +43,7 @@ const Scripts = () => {
       <Table
         columns={[
           { label: 'ID', dataKey: 'id' },
-          { label: 'Contenu', dataKey: 'content' },
+          { label: 'Contenu', dataKey: 'content', render: (str) => (typeof str === 'string' ? truncate(str, 50) : str) },
           { label: 'Date de création', dataKey: 'createdAt' },
         ]}
         data={scripts}
