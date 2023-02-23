@@ -107,7 +107,7 @@ const Script = () => {
       </p>
 
       <div className='flex gap-8 w-full h-full'>
-        <div className='flex flex-col gap-4 flex-1 justify-between items-end'>
+        <div className='flex flex-col flex-1 gap-4 justify-between items-end'>
           <TextArea
             name='script-content'
             label='Contenu du script'
@@ -119,10 +119,14 @@ const Script = () => {
           />
         </div>
 
-        <div className='flex flex-col gap-12 flex-1'>
-          {[...(script?.playerIntervals || [])].sort(sortPlayerIntervals).map((playerInterval, index) => (
-            <PlayerIntervalDisplay playerInterval={playerInterval} key={playerInterval.id} />
-          ))}
+        <div className='flex flex-col flex-1 gap-4 flex-1min-w-min '>
+          <span className='font-semibold text-slate-900'>Intervals de joueurs</span>
+
+          <div className='flex flex-col gap-12'>
+            {[...(script?.playerIntervals || [])].sort(sortPlayerIntervals).map((playerInterval, index) => (
+              <PlayerIntervalDisplay playerInterval={playerInterval} key={playerInterval.id} />
+            ))}
+          </div>
         </div>
       </div>
     </div>

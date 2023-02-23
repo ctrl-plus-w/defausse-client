@@ -6,6 +6,8 @@ import type { AxiosResponse } from 'axios';
 
 import clsx from 'clsx';
 
+import LocationsDisplay from '@module/LocationsDisplay';
+
 import InvisibleInput from '@element/InvisibleInput';
 
 import database from '@database/index';
@@ -20,7 +22,6 @@ import { NotificationStatus } from '@type/notifications';
 import { PlayerInterval } from '@type/models';
 
 import config from '@config/index';
-import LocationDisplay from '@element/LocationDisplay';
 
 interface IProps {
   playerInterval: PlayerInterval;
@@ -188,15 +189,7 @@ const PlayerIntervalDisplay = ({ playerInterval }: IProps) => {
         </span>
       </h2>
 
-      <ul className='flex flex-col mt-4 divide-y'>
-        {playerInterval.locations?.map((location) => (
-          <LocationDisplay location={location} key={location.id} />
-        ))}
-
-        <li className='pl-6 py-2'>
-          <InvisibleInput value='' placeholder='Ajouter une location' autoWidth />
-        </li>
-      </ul>
+      <LocationsDisplay playerIntervalId={playerInterval.id} locations={playerInterval?.locations || []} />
     </div>
   );
 };
