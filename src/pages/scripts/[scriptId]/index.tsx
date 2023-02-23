@@ -13,7 +13,7 @@ import TextArea from '@element/TextArea';
 
 import database from '@database/index';
 
-import { selectScript, selectScriptIsLoading, setScript, updateScript } from '@slice/scriptSlice';
+import { selectScript, selectScriptIsLoading, setLoading, setScript, updateScript } from '@slice/scriptSlice';
 import { addNotification } from '@slice/notificationsSlice';
 
 import { NotificationStatus } from '@type/notifications';
@@ -29,37 +29,37 @@ const Script = () => {
   const [content, setContent] = useState('');
 
   useEffect(() => {
-    if (loading) {
-      database
-        .get<any, AxiosResponse<Script>>('/scripts/' + router.query.scriptId)
-        .then((res) => {
-          const _script = res.data;
+    dispatch(setLoading(true));
 
-          setContent(_script.content);
-          dispatch(setScript(_script));
-        })
-        .catch((err) => {
-          let description = 'Une erreure inconnue est survenue.';
+    database
+      .get<any, AxiosResponse<Script>>('/scripts/' + router.query.scriptId)
+      .then((res) => {
+        const _script = res.data;
 
-          if (err instanceof AxiosError) {
-            if (err.response) {
-              description = err.response.data.error;
-            } else {
-              description = err.message;
-            }
+        setContent(_script.content);
+        dispatch(setScript(_script));
+      })
+      .catch((err) => {
+        let description = 'Une erreure inconnue est survenue.';
+
+        if (err instanceof AxiosError) {
+          if (err.response) {
+            description = err.response.data.error;
+          } else {
+            description = err.message;
           }
+        }
 
-          dispatch(
-            addNotification({
-              name: 'Erreur GET /scripts',
-              description,
-              status: NotificationStatus.ERROR,
-            })
-          );
+        dispatch(
+          addNotification({
+            name: 'Erreur GET /scripts',
+            description,
+            status: NotificationStatus.ERROR,
+          })
+        );
 
-          router.push('/scripts');
-        });
-    }
+        router.push('/scripts');
+      });
   }, []);
 
   const onTextAreaBlur = async () => {

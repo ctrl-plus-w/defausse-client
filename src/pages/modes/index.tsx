@@ -18,18 +18,18 @@ const Modes = () => {
   const [modes, setModes] = useState<Mode[]>([]);
 
   useEffect(() => {
-    if (loading) {
-      database.get<any, AxiosResponse<Mode[]>>('/modes').then((res) => {
-        setModes(res.data);
-      });
+    database.get<any, AxiosResponse<Mode[]>>('/modes').then((res) => {
+      setModes(res.data);
+    });
 
-      setLoading(false);
-    }
+    setLoading(false);
   }, []);
 
   const handleRowClick = (mode: Mode) => {
     router.push('/modes/' + mode.id);
   };
+
+  if (loading) return <>Loading...</>;
 
   return (
     <div className='flex flex-col px-12 py-16'>

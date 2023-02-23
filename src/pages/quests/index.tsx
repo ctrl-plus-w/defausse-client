@@ -19,14 +19,14 @@ const Quests = () => {
   const [quests, setQuest] = useState<Quest[]>([]);
 
   useEffect(() => {
-    if (loading) {
-      database.get<any, AxiosResponse<Quest[]>>('/quests').then((res) => {
-        setQuest(res.data);
-      });
+    database.get<any, AxiosResponse<Quest[]>>('/quests').then((res) => {
+      setQuest(res.data);
+    });
 
-      setLoading(false);
-    }
+    setLoading(false);
   }, []);
+
+  if (loading) return <>Loading...</>;
 
   const handleRowClick = (quest: Quest) => {
     router.push('/quests/' + quest.id);

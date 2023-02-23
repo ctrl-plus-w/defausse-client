@@ -26,13 +26,11 @@ const Scripts = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
-    if (loading) {
-      database.get<any, AxiosResponse<Script[]>>('/scripts').then((res) => {
-        setScripts(res.data);
-      });
+    database.get<any, AxiosResponse<Script[]>>('/scripts').then((res) => {
+      setScripts(res.data);
+    });
 
-      setLoading(false);
-    }
+    setLoading(false);
   }, [loading]);
 
   const refreshScripts = () => {
@@ -42,6 +40,8 @@ const Scripts = () => {
   const handleRowClick = (script: Script) => {
     router.push('/scripts/' + script.id);
   };
+
+  if (loading) return <>Loading...</>;
 
   return (
     <>

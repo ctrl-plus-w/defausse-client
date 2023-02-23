@@ -3,8 +3,6 @@ import { useEffect } from 'react';
 import Breadcrumb from '@element/Breadcrumb';
 
 const Location = () => {
-  useEffect(() => {}, []);
-
   return (
     <div className='flex flex-col h-full px-12 py-16'>
       <Breadcrumb
