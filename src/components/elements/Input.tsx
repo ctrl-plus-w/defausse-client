@@ -13,6 +13,8 @@ interface IProps {
 	label: string;
 
 	value?: string;
+	placeholder?: string;
+
 	onChange?: ChangeEventHandler<HTMLInputElement>;
 	onFocus?: FocusEventHandler<HTMLInputElement>;
 	onBlur?: FocusEventHandler<HTMLInputElement>;
@@ -24,6 +26,7 @@ interface IProps {
 
 const Input = ({
 	name,
+	placeholder,
 	label,
 	value,
 	onChange,
@@ -54,6 +57,7 @@ const Input = ({
 				])}
 				ref={inputRef}
 				value={value}
+				placeholder={placeholder}
 				onChange={onChange}
 				onKeyDown={_onKeyDown}
 				onFocus={onFocus}
