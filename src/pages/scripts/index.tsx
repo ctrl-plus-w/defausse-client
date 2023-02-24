@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 
 import type { AxiosResponse } from 'axios';
 
+import Head from 'next/head';
+
 import Table from '@module/Table';
 
 import ScriptCreationModal from '@modal/ScriptCreationModal';
@@ -56,6 +58,10 @@ const Scripts = () => {
 				setOpen={setModalOpen}
 				refreshScripts={refreshScripts}
 			/>
+
+			<Head>
+				<title>Scénarios</title>
+			</Head>
 
 			<div className="flex flex-col px-12 py-16">
 				<div className="flex items-center gap-4 mb-4">

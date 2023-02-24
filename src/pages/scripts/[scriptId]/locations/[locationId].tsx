@@ -6,6 +6,8 @@ import { AxiosError } from 'axios';
 import type { AxiosResponse } from 'axios';
 import type { GetServerSidePropsContext } from 'next';
 
+import Head from 'next/head';
+
 import database from '@database/index';
 
 import RoleCombinationsDisplay from '@module/RoleCombinationsDisplay';
@@ -66,6 +68,10 @@ const Location = () => {
 
 	return (
 		<>
+			<Head>
+				<title>Édition d&apos;une location</title>
+			</Head>
+
 			<div className="flex flex-col h-full px-12 py-16">
 				<Breadcrumb
 					items={[

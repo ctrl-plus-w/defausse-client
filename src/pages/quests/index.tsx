@@ -3,9 +3,17 @@ import { useRouter } from 'next/router';
 
 import type { AxiosResponse } from 'axios';
 
+import Head from 'next/head';
+
 import Table from '@module/Table';
 
+import QuestCreationModal from '@modal/QuestCreationModal';
+
 import TablePageSkeleton from '@skeleton/TablePageSkeleton';
+
+import Button from '@element/Button';
+
+import PlusIcon from '@icon/PlusIcon';
 
 import database from '@database/index';
 
@@ -13,9 +21,6 @@ import { truncate } from '@helper/string.helper';
 import { renderDate } from '@helper/render.helper';
 
 import { Quest } from '@type/models';
-import Button from '@element/Button';
-import PlusIcon from '@icon/PlusIcon';
-import QuestCreationModal from '@modal/QuestCreationModal';
 
 const Quests = () => {
 	const router = useRouter();
@@ -52,6 +57,10 @@ const Quests = () => {
 				setOpen={setModalOpen}
 				refreshQuests={refreshQuests}
 			/>
+
+			<Head>
+				<title>Quêtes</title>
+			</Head>
 
 			<div className="flex flex-col px-12 py-16">
 				<div className="flex items-center gap-4 mb-4">

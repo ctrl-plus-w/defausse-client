@@ -7,6 +7,8 @@ import type { ChangeEvent, Dispatch, FocusEvent, SetStateAction } from 'react';
 import type { GetServerSidePropsContext } from 'next';
 import type { AxiosResponse } from 'axios';
 
+import Head from 'next/head';
+
 import Breadcrumb from '@element/Breadcrumb';
 import TextArea from '@element/TextArea';
 import Input from '@element/Input';
@@ -112,55 +114,61 @@ const Mode = () => {
 	if (loading) return <>Loading...</>;
 
 	return (
-		<div className="flex flex-col px-12 py-16">
-			<Breadcrumb
-				items={[
-					{ label: 'Modes' },
-					{ label: `Mode(ID: ${mode!.id.toString()})` },
-				]}
-			/>
-			<h1 className="text-5xl font-medium text-gray-900 mb-4 mt-2">
-				{mode!.name}
-			</h1>
+		<>
+			<Head>
+				<title>Édition d&apos;un mode</title>
+			</Head>
 
-			<p className="text-normal font-normal text-slate-700 w-1/2 mb-16">
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
-				accusamus, nisi doloribus odit facilis sequi assumenda at aliquam alias,
-				et eaque, vitae blanditiis. Rerum, consectetur aliquid itaque est ad
-				eos.
-			</p>
-
-			<form className="flex w-full gap-6">
-				<div className="flex flex-col flex-1 gap-6">
-					<Input
-						name="name"
-						label="Nom"
-						value={name}
-						onChange={onChange(setName)}
-						onBlur={onBlur}
-					/>
-					<TextArea
-						name="summary"
-						label="Résumé"
-						value={summary}
-						onChange={onChange(setSummary)}
-						onBlur={onBlur}
-						blurOnEnter={false}
-						rows={5}
-					/>
-				</div>
-
-				<TextArea
-					name="description"
-					label="Description"
-					value={description}
-					onChange={onChange(setDescription)}
-					onBlur={onBlur}
-					className="flex-1"
-					blurOnEnter={false}
+			<div className="flex flex-col px-12 py-16">
+				<Breadcrumb
+					items={[
+						{ label: 'Modes' },
+						{ label: `Mode(ID: ${mode!.id.toString()})` },
+					]}
 				/>
-			</form>
-		</div>
+				<h1 className="text-5xl font-medium text-gray-900 mb-4 mt-2">
+					{mode!.name}
+				</h1>
+
+				<p className="text-normal font-normal text-slate-700 w-1/2 mb-16">
+					Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
+					accusamus, nisi doloribus odit facilis sequi assumenda at aliquam
+					alias, et eaque, vitae blanditiis. Rerum, consectetur aliquid itaque
+					est ad eos.
+				</p>
+
+				<form className="flex w-full gap-6">
+					<div className="flex flex-col flex-1 gap-6">
+						<Input
+							name="name"
+							label="Nom"
+							value={name}
+							onChange={onChange(setName)}
+							onBlur={onBlur}
+						/>
+						<TextArea
+							name="summary"
+							label="Résumé"
+							value={summary}
+							onChange={onChange(setSummary)}
+							onBlur={onBlur}
+							blurOnEnter={false}
+							rows={5}
+						/>
+					</div>
+
+					<TextArea
+						name="description"
+						label="Description"
+						value={description}
+						onChange={onChange(setDescription)}
+						onBlur={onBlur}
+						className="flex-1"
+						blurOnEnter={false}
+					/>
+				</form>
+			</div>
+		</>
 	);
 };
 

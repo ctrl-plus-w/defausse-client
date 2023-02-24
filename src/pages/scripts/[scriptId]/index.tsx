@@ -7,6 +7,8 @@ import type { GetServerSidePropsContext } from 'next';
 import type { AxiosResponse } from 'axios';
 import type { ChangeEvent } from 'react';
 
+import Head from 'next/head';
+
 import PlayerIntervalsDisplay from '@module/PlayerIntervalsDisplay';
 
 import Breadcrumb from '@element/Breadcrumb';
@@ -136,55 +138,63 @@ const Script = () => {
 	}
 
 	return (
-		<div className="flex flex-col px-12 py-16">
-			<Breadcrumb
-				items={[
-					{ label: 'Scénarios' },
-					{ label: `Scénario(ID: ${script!.id.toString()})` },
-				]}
-			/>
-			<h1 className="text-5xl font-medium text-gray-900 mb-4 mt-2">Édition</h1>
+		<>
+			<Head>
+				<title>Édition d&apos;un scénario</title>
+			</Head>
 
-			<p className="text-normal font-normal text-slate-700 w-2/3 mb-16">
-				Sur cette page, vous pouvez modifier les informations relatives à un
-				scénario. Vous avez sur la gauche de la page un champs dans lequel vous
-				pouvez rentrer le contenu du scénario en lui-même (il s&apos;enregistre
-				tout seul lorsque vous quitter le champs). D&apos;une autre part, sur la
-				droite de l&apos;interface, vous pouvez modifier les locations où se
-				passent les scénarios en fonction du nombre de joueurs. (Ici aussi, cela
-				s&apos;enregistre tout seul)
-			</p>
-
-			<div className="flex flex-col gap-8 w-full h-full ">
-				<TextArea
-					name="script-content"
-					label="Contenu du script"
-					onBlur={onTextAreaBlur}
-					className="w-full"
-					value={content}
-					onChange={e => setContent(e.target.value)}
-					rows={5}
+			<div className="flex flex-col px-12 py-16">
+				<Breadcrumb
+					items={[
+						{ label: 'Scénarios' },
+						{ label: `Scénario(ID: ${script!.id.toString()})` },
+					]}
 				/>
+				<h1 className="text-5xl font-medium text-gray-900 mb-4 mt-2">
+					Édition
+				</h1>
 
-				<div className="flex flex-col gap-4">
-					<span className="font-semibold text-slate-900">Modes</span>
+				<p className="text-normal font-normal text-slate-700 w-2/3 mb-16">
+					Sur cette page, vous pouvez modifier les informations relatives à un
+					scénario. Vous avez sur la gauche de la page un champs dans lequel
+					vous pouvez rentrer le contenu du scénario en lui-même (il
+					s&apos;enregistre tout seul lorsque vous quitter le champs).
+					D&apos;une autre part, sur la droite de l&apos;interface, vous pouvez
+					modifier les locations où se passent les scénarios en fonction du
+					nombre de joueurs. (Ici aussi, cela s&apos;enregistre tout seul)
+				</p>
 
-					<div className="flex flex-col">
-						{modes.map((mode, index) => (
-							<Checkbox
-								name={mode.name}
-								label={mode.name}
-								key={index}
-								checked={script!.modes.some(_mode => _mode.id === mode.id)}
-								onChange={onChangeMode(mode)}
-							/>
-						))}
+				<div className="flex flex-col gap-8 w-full h-full ">
+					<TextArea
+						name="script-content"
+						label="Contenu du script"
+						onBlur={onTextAreaBlur}
+						className="w-full"
+						value={content}
+						onChange={e => setContent(e.target.value)}
+						rows={5}
+					/>
+
+					<div className="flex flex-col gap-4">
+						<span className="font-semibold text-slate-900">Modes</span>
+
+						<div className="flex flex-col">
+							{modes.map((mode, index) => (
+								<Checkbox
+									name={mode.name}
+									label={mode.name}
+									key={index}
+									checked={script!.modes.some(_mode => _mode.id === mode.id)}
+									onChange={onChangeMode(mode)}
+								/>
+							))}
+						</div>
 					</div>
-				</div>
 
-				<PlayerIntervalsDisplay />
+					<PlayerIntervalsDisplay />
+				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 

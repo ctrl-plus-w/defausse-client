@@ -3,11 +3,17 @@ import { useRouter } from 'next/router';
 
 import type { AxiosResponse } from 'axios';
 
+import Head from 'next/head';
+
 import Table from '@module/Table';
 
 import ModeCreationModal from '@modal/ModeCreationModal';
 
 import TablePageSkeleton from '@skeleton/TablePageSkeleton';
+
+import Button from '@element/Button';
+
+import PlusIcon from '@icon/PlusIcon';
 
 import database from '@database/index';
 
@@ -15,8 +21,6 @@ import { renderDate } from '@helper/render.helper';
 import { truncate } from '@helper/string.helper';
 
 import { Mode } from '@type/models';
-import Button from '@element/Button';
-import PlusIcon from '@icon/PlusIcon';
 
 const Modes = () => {
 	const router = useRouter();
@@ -53,6 +57,10 @@ const Modes = () => {
 				setOpen={setModalOpen}
 				refreshModes={refreshModes}
 			/>
+
+			<Head>
+				<title>Modes</title>
+			</Head>
 
 			<div className="flex flex-col px-12 py-16">
 				<div className="flex items-center gap-4 mb-4">
