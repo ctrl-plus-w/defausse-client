@@ -5,6 +5,8 @@ import type { AxiosResponse } from 'axios';
 
 import Table from '@module/Table';
 
+import TablePageSkeleton from '@skeleton/TablePageSkeleton';
+
 import database from '@database/index';
 
 import { truncate } from '@helper/string.helper';
@@ -26,11 +28,11 @@ const Quests = () => {
 		setLoading(false);
 	}, []);
 
-	if (loading) return <>Loading...</>;
-
 	const handleRowClick = (quest: Quest) => {
 		router.push('/quests/' + quest.id);
 	};
+
+	if (loading) return <TablePageSkeleton />;
 
 	return (
 		<div className="flex flex-col px-12 py-16">

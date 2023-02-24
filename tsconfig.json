@@ -17,18 +17,26 @@
     "baseUrl": ".",
     "paths": {
       "@style/*": ["./src/styles/*"],
+
+      "@skeleton/*": ["./src/components/skeletons/*"],
       "@element/*": ["./src/components/elements/*"],
       "@modal/*": ["./src/components/modals/*"],
       "@module/*": ["./src/components/modules/*"],
       "@layout/*": ["./src/components/layouts/*"],
-      "@helper/*": ["./src/helpers/*"],
-      "@hook/*": ["./src/hooks/*"],
-      "@redux/*": ["./src/redux/*"],
-      "@type/*": ["./src/types/*"],
-      "@database/*": ["./src/database/*"],
-      "@config/*": ["./src/config/*"],
       "@icon/*": ["./src/components/icons/*"],
-      "@slice/*": ["./src/redux/slices/*"]
+
+      "@helper/*": ["./src/helpers/*"],
+
+      "@hook/*": ["./src/hooks/*"],
+
+      "@redux/*": ["./src/redux/*"],
+      "@slice/*": ["./src/redux/slices/*"],
+
+      "@type/*": ["./src/types/*"],
+
+      "@database/*": ["./src/database/*"],
+      
+      "@config/*": ["./src/config/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

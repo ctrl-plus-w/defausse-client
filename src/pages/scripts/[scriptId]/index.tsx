@@ -91,7 +91,7 @@ const Script = () => {
 	};
 
 	if (loading) {
-		return <>Loading...</>;
+		return <div className="flex flex-col px-12 py-16"></div>;
 	}
 
 	return (

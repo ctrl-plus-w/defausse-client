@@ -5,6 +5,8 @@ import type { AxiosResponse } from 'axios';
 
 import Table from '@module/Table';
 
+import TablePageSkeleton from '@skeleton/TablePageSkeleton';
+
 import database from '@database/index';
 
 import { renderDate } from '@helper/render.helper';
@@ -30,7 +32,7 @@ const Modes = () => {
 		router.push('/modes/' + mode.id);
 	};
 
-	if (loading) return <>Loading...</>;
+	if (loading) return <TablePageSkeleton />;
 
 	return (
 		<div className="flex flex-col px-12 py-16">

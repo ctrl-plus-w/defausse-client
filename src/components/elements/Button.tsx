@@ -65,4 +65,22 @@ const Button = ({
 	);
 };
 
+export const ButtonSkeleton = ({ size = 'normal', className }: IProps) => {
+	const isSmall = size === 'small';
+	const isNormal = size === 'normal';
+	const isLarge = size === 'large';
+
+	return (
+		<div
+			className={clsx([
+				'bg-gradient-to-tl from-pink-400 to-pink-600 rounded',
+				isSmall && 'w-44 h-11',
+				isNormal && 'w-56 h-12',
+				isLarge && 'w-60 h-14',
+				className,
+			])}
+		></div>
+	);
+};
+
 export default Button;

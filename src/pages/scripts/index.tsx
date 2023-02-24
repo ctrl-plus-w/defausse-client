@@ -9,6 +9,8 @@ import ScriptCreationModal from '@modal/ScriptCreationModal';
 
 import Button from '@element/Button';
 
+import TablePageSkeleton from '@skeleton/TablePageSkeleton';
+
 import PlusIcon from '@icon/PlusIcon';
 
 import database from '@database/index';
@@ -41,7 +43,9 @@ const Scripts = () => {
 		router.push('/scripts/' + script.id);
 	};
 
-	if (loading) return <>Loading...</>;
+	if (loading) {
+		return <TablePageSkeleton />;
+	}
 
 	return (
 		<>
