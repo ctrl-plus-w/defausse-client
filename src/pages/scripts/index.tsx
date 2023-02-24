@@ -28,6 +28,8 @@ const Scripts = () => {
 	const [modalOpen, setModalOpen] = useState(false);
 
 	useEffect(() => {
+		if (!loading) return;
+
 		database.get<any, AxiosResponse<Script[]>>('/scripts').then(res => {
 			setScripts(res.data);
 		});
