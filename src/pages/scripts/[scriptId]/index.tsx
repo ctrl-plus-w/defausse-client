@@ -5,11 +5,13 @@ import { AxiosError } from 'axios';
 
 import type { GetServerSidePropsContext } from 'next';
 import type { AxiosResponse } from 'axios';
+import type { ChangeEvent } from 'react';
 
 import PlayerIntervalsDisplay from '@module/PlayerIntervalsDisplay';
 
 import Breadcrumb from '@element/Breadcrumb';
 import TextArea from '@element/TextArea';
+import Checkbox from '@element/Checkbox';
 
 import database from '@database/index';
 
@@ -23,7 +25,7 @@ import {
 import { addNotification } from '@slice/notificationsSlice';
 
 import { NotificationStatus } from '@type/notifications';
-import { Script } from '@type/models';
+import { Mode, Script } from '@type/models';
 
 const Script = () => {
 	const router = useRouter();
@@ -32,10 +34,18 @@ const Script = () => {
 	const script = useSelector(selectScript);
 	const loading = useSelector(selectScriptIsLoading);
 
+	const [modes, setModes] = useState<Mode[]>([]);
+	const [modesLoading, setModesLoading] = useState(true);
+
 	const [content, setContent] = useState('');
 
 	useEffect(() => {
 		dispatch(setLoading(true));
+
+		database.get<any, AxiosResponse<Mode[]>>('/modes').then(res => {
+			setModes(res.data);
+			setModesLoading(false);
+		});
 
 		database
 			.get<any, AxiosResponse<Script>>('/scripts/' + router.query.scriptId)
@@ -90,7 +100,38 @@ const Script = () => {
 		}
 	};
 
-	if (loading) {
+	const onChangeMode =
+		(mode: Mode) => async (event: ChangeEvent<HTMLInputElement>) => {
+			if (!script) return;
+
+			try {
+				console.log(mode, event.target.checked);
+				if (event.target.checked) {
+					await database.post<any, AxiosResponse<Script>>(
+						`/scripts/${script.id}/modes`,
+						{ modeId: mode.id }
+					);
+				} else {
+					await database.delete<any, AxiosResponse<Script>>(
+						`/scripts/${script.id}/modes/${mode.id}`
+					);
+				}
+
+				const { data: _script } = await database.get(`/scripts/${script.id}`);
+
+				dispatch(updateScript(_script));
+			} catch (err) {
+				dispatch(
+					addNotification({
+						name: 'Une erreure est survenue',
+						description: "Lae mode de jeu n'as pas été modifié",
+						status: NotificationStatus.ERROR,
+					})
+				);
+			}
+		};
+
+	if (loading || modesLoading) {
 		return <div className="flex flex-col px-12 py-16"></div>;
 	}
 
@@ -124,6 +165,22 @@ const Script = () => {
 					onChange={e => setContent(e.target.value)}
 					rows={5}
 				/>
+
+				<div className="flex flex-col gap-4">
+					<span className="font-semibold text-slate-900">Modes</span>
+
+					<div className="flex flex-col">
+						{modes.map((mode, index) => (
+							<Checkbox
+								name={mode.name}
+								label={mode.name}
+								key={index}
+								checked={script!.modes.some(_mode => _mode.id === mode.id)}
+								onChange={onChangeMode(mode)}
+							/>
+						))}
+					</div>
+				</div>
 
 				<PlayerIntervalsDisplay />
 			</div>
