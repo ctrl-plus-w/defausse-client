@@ -10,6 +10,10 @@ import LocationsDisplay from '@module/LocationsDisplay';
 
 import InvisibleInput from '@element/InvisibleInput';
 
+import TrashIcon from '@icon/TrashIcon';
+import CheckIcon from '@icon/CheckIcon';
+import XIcon from '@icon/XIcon';
+
 import database from '@database/index';
 
 import { selectScript, updateScript } from '@slice/scriptSlice';
@@ -43,6 +47,8 @@ const PlayerIntervalDisplay = ({ playerInterval }: IProps) => {
 
 	const [_min, _setMin] = useState(min);
 	const [_max, _setMax] = useState(max);
+
+	const [validateDeletion, setValidateDeletion] = useState(false);
 
 	const updateValue = (
 		func: Dispatch<SetStateAction<string>>,
@@ -184,8 +190,47 @@ const PlayerIntervalDisplay = ({ playerInterval }: IProps) => {
 		if (max === '' || _max === _min) setHasInterval(false);
 	};
 
+	const onDeleteClick = async () => {
+		if (!validateDeletion) {
+			setValidateDeletion(true);
+			return;
+		}
+
+		try {
+			await database.delete<any, AxiosResponse<PlayerInterval>>(
+				`/playerIntervals/${playerInterval.id}`
+			);
+
+			const { data: _script } = await database.get(`/scripts/${script!.id}`);
+
+			dispatch(updateScript(_script));
+		} catch (err) {
+			dispatch(
+				addNotification({
+					name: 'Une erreure est survenue',
+					description: "L'interval de joueurs n'as pas été supprimé.",
+					status: NotificationStatus.ERROR,
+				})
+			);
+		}
+	};
+
+	const DeleteIcon = validateDeletion ? CheckIcon : TrashIcon;
+
 	return (
-		<div className="flex flex-col">
+		<div className="relative flex flex-col">
+			<div className="absolute top-0 -left-8 h-6 flex flex-col gap-2">
+				<button onClick={onDeleteClick}>
+					<DeleteIcon className="w-5 h-5 stroke-gray-300 hover:stroke-pink-700 transition-colors duration-300" />
+				</button>
+
+				{validateDeletion && (
+					<button className="group" onClick={() => setValidateDeletion(false)}>
+						<XIcon className="w-5 h-5 stroke-gray-300 hover:stroke-pink-700 transition-colors duration-300" />
+					</button>
+				)}
+			</div>
+
 			<h2 className="text-lg">
 				Partie de{' '}
 				<InvisibleInput
