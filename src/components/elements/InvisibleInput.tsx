@@ -23,8 +23,10 @@ interface IProps {
 
 	className?: string;
 
-	bottomBorder?: boolean;
 	autoWidth?: boolean;
+	autoWidthFactor?: number;
+
+	bottomBorder?: boolean;
 	blurOnEnter?: boolean;
 	disabled?: boolean;
 }
@@ -43,6 +45,8 @@ const InvisibleInput = ({
 	textAlign,
 
 	autoWidth,
+	autoWidthFactor = 8,
+
 	bottomBorder,
 	disabled,
 	blurOnEnter = true,
@@ -72,9 +76,9 @@ const InvisibleInput = ({
 
 		if (!isNaN(paddingLeft) && !isNaN(paddingRight)) {
 			element.style.width =
-				(length + 1) * 8 + paddingLeft + paddingRight + 'px';
+				(length + 1) * autoWidthFactor + paddingLeft + paddingRight + 'px';
 		} else {
-			element.style.width = (length + 1) * 8 + 'px';
+			element.style.width = (length + 1) * autoWidthFactor + 'px';
 		}
 	}, [inputRef]);
 
